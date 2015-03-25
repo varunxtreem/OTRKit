@@ -180,7 +180,7 @@ NSString* OTRKitGetMimeTypeForExtension(NSString* extension) {
                 [self.delegate dataHandler:self transfer:transfer progress:percentageComplete];
             });
             
-            if (endOfRange == transfer.fileData.length) {
+            if (endOfRange == transfer.fileData.length - 1) {
                 [self.outgoingTransfers removeObjectForKey:url];
                 dispatch_async(self.callbackQueue, ^{
                     [self.delegate dataHandler:self transferComplete:transfer];

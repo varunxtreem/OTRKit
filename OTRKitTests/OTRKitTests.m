@@ -20,7 +20,8 @@ static NSString * const kOTRTestProtocolXMPP = @"xmpp";
 @property (nonatomic, strong) OTRKit *otrKitBob;
 @property (nonatomic, strong) OTRDataHandler *dataHandlerAlice;
 @property (nonatomic, strong) OTRDataHandler *dataHandlerBob;
-@property (nonatomic, strong) XCTestExpectation *expectation;
+@property (nonatomic, strong) XCTestExpectation *bobCompleteDataTransfer;
+@property (nonatomic, strong) XCTestExpectation *aliceCompleteDataTransfer;
 @property (nonatomic) dispatch_queue_t callbackQueue;
 @property (nonatomic, strong) NSData *testFileData;
 
@@ -72,7 +73,8 @@ static NSString * const kOTRTestProtocolXMPP = @"xmpp";
     success = [[NSFileManager defaultManager] createDirectoryAtPath:path2 withIntermediateDirectories:YES attributes:nil error:nil];
     XCTAssertTrue(success);
     
-    self.expectation = [self expectationWithDescription:@"test1"];
+    self.bobCompleteDataTransfer = [self expectationWithDescription:@"bob-data"];
+    self.aliceCompleteDataTransfer = [self expectationWithDescription:@"alice-data"];
     
     [self.otrKitAlice setupWithDataPath:path1];
     [self.otrKitBob setupWithDataPath:path2];
@@ -367,6 +369,10 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString*)accountName
 - (void)dataHandler:(OTRDataHandler*)dataHandler
            transfer:(OTRDataTransfer*)transfer
            progress:(float)progress {
+    XCTAssertLessThanOrEqual(progress, 1,@"Progress must be less than one");
+    XCTAssertGreaterThan(progress, 0, @"Progress must be greater than zero");
+    XCTAssertNotNil(dataHandler);
+    XCTAssertNotNil(transfer);
     NSLog(@"transfer progress: %f %@", progress, transfer);
 
 }
@@ -374,9 +380,13 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString*)accountName
 - (void)dataHandler:(OTRDataHandler*)dataHandler
    transferComplete:(OTRDataTransfer*)transfer {
     NSLog(@"transfer complete: %@", transfer);
+    if (dataHandler == self.dataHandlerAlice) {
+        [self.aliceCompleteDataTransfer fulfill];
+    }
+    
     if (dataHandler == self.dataHandlerBob) {
         if ([transfer.fileData isEqualToData:self.testFileData]) {
-            [self.expectation fulfill];
+            [self.bobCompleteDataTransfer fulfill];
         }
     }
 }
