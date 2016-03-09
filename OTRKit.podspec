@@ -13,10 +13,12 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, "7.0"
   s.source_files = "OTRKit/**/*.{h,m}", "OTRKitDependencies/include/**/*.h"
-  s.header_mappings_dir = "OTRKitDependencies/include"
+  s.public_header_files = "OTRKit/**/*.h"
+  # s.header_mappings_dir = "OTRKitDependencies/include"
   s.preserve_paths  = "OTRKitDependencies/libs/*", "OTRKitDependencies/include/**/*.h"
   s.vendored_libraries  = "OTRKitDependencies/lib/*.a"
   s.library     = 'gpg-error', 'gcrypt', 'otr'
   s.requires_arc = true
   s.frameworks = 'Security'
+  s.xcconfig = { 'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/OTRKit/OTRKitDependencies/include' }
 end

@@ -40,9 +40,9 @@ fi
 
 # Versions
 export MIN_IOS_VERSION="7.0"
-export LIBGPG_ERROR_VERSION="1.19"
-export LIBGCRYPT_VERSION="1.6.3"
-export LIBOTR_VERSION="4.1.0"
+export LIBGPG_ERROR_VERSION="1.21"
+export LIBGCRYPT_VERSION="1.6.5"
+export LIBOTR_VERSION="4.1.1"
 
 BUILT_ARCHS=()
 DEVELOPER=`xcode-select --print-path`
