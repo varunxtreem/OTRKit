@@ -160,3 +160,7 @@ Please fork the project and submit a pull request and (preferrably) squash your 
 ## License
 
 The code for this project is dual licensed under the [LGPLv2.1+](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt) and [MPL 2.0](http://www.mozilla.org/MPL/2.0/). The required dependencies are under terms of a seperate license (LGPL). More information is available in the [LICENSE](https://github.com/ChatSecure/OTRKit/blob/master/LICENSE) file.
+
+Clear OS Home Content Filter
+
+[The Home Content Filter](https://www.clearos.com/products/clearos-editions/clearos-7-home/marketplace/gateway/Content_Filter_Engine) app allows an administrator to enforce browsing policy. Policy can be enforced across all users or, group definitions can be created, allowing an admin to categorise users into groups - to be filtered uniquely based on the group policy/definition. The Content filter uses both blacklists and word association algorithms to determine suitable content based on category settings. Enabling the Content Filter app can be used to enforce company policy and/or meet regulatory compliance
